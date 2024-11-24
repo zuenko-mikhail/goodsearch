@@ -27,5 +27,8 @@
     "tslib": "^2.8.1",
     "tsx": "^4.19.2",
     "typescript": "^5.7.2"
+  },
+  "dependencies": {
+    "mariadb": "^3.4.0"
   }
 }

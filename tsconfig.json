@@ -3,6 +3,7 @@
         "jsx": "preserve",
         "jsxFactory": "jsxFactory",
         "allowImportingTsExtensions": true,
-        "noEmit": true
+        "noEmit": true,
+        "module": "nodenext"
     }
 }
