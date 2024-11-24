@@ -1,0 +1,31 @@
+{
+  "name": "hackathon-marketplace",
+  "type": "module",
+  "scripts": {
+    "build": "rollup -c rollup.build.js",
+    "dev": "rollup -c rollup.dev.js",
+    "server": "tsx server",
+    "bot": "tsx search-bot"
+  },
+  "devDependencies": {
+    "@babel/core": "^7.23.5",
+    "@babel/plugin-syntax-jsx": "^7.24.7",
+    "@babel/plugin-transform-runtime": "^7.25.9",
+    "@babel/preset-env": "^7.23.5",
+    "@babel/preset-typescript": "^7.26.0",
+    "@babel/runtime-corejs3": "^7.26.0",
+    "@rollup/plugin-babel": "^6.0.4",
+    "@rollup/plugin-commonjs": "^25.0.7",
+    "@rollup/plugin-node-resolve": "^15.2.3",
+    "@rollup/plugin-terser": "^0.4.4",
+    "@rollup/plugin-typescript": "^12.1.1",
+    "cssnano-preset-advanced": "^6.0.1",
+    "rollup": "^4.8.0",
+    "rollup-plugin-postcss": "^4.0.2",
+    "sass": "^1.80.6",
+    "sass-loader": "^13.3.2",
+    "tslib": "^2.8.1",
+    "tsx": "^4.19.2",
+    "typescript": "^5.7.2"
+  }
+}
