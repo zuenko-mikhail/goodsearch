@@ -33,7 +33,7 @@ createServer(function(req, res) {
         else res.writeHead(code, { 'Content-Type': contentType }).end(data);
     }
 
-    const url = new URL(req.url, 'http://localhost');
+    const url = new URL(req.url, 'http://zuenko.my.to:3306/');
     let path = url.pathname;
     if (path.startsWith('/api/')) {
         const search = Object.fromEntries(url.search.slice(1).split('&').map(a => a.split('=').map(b => decodeURIComponent(b))));
