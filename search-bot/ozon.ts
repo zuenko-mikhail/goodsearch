@@ -38,11 +38,11 @@ function parseDate(input: string) {
     }
 }
 
-export async function getCategories() {
+async function getCategories() {
     const { categories } = await getApi('/', 'catalogMenu');
     return Object.fromEntries(categories.map((c: { url: string; title: string; }) => [c.url.slice(10, -1), c.title]));
 }
-export async function getCategoryPage(category: string, page: number) {
+async function getCategoryPage(category: string, page: number): Promise<TableItem[]> {
     const data = await getApi(`/category/${category}/?layout_container=${page > 1 ? 'categorySearchMegapagination' : ''}&layout_page_index=${page}&page=${page}&sorting=new`, 'searchResultsV2');
     if (!data || !data.items || data.items.some(i => !i?.multiButton?.ozonButton?.addToCartButtonWithQuantity?.action?.id)) return [];
     console.log(data.items);
@@ -86,4 +86,19 @@ export async function getCategoryPage(category: string, page: number) {
         }
         return item;
     });
+}
+
+export default async function* ozonGoods() {
+    const ozonCategories = Object.fromEntries(Object.entries(await getCategories()).map(([key]) => [key, 0]));
+    while (true) {
+        let stopped = true;
+        for (const category in ozonCategories) {
+            if (ozonCategories[category] === null) continue;
+            stopped = false;
+            const items = await getCategoryPage(category, ozonCategories[category]++);
+            if (items.length === 0) ozonCategories[category] = null;
+            yield items;
+        }
+        if (stopped) break;
+    }
 }

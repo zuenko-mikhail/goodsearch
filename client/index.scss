@@ -1,23 +1,35 @@
+@font-face {
+    font-family: 'Ozon Font';
+    src: url('./fonts/gteestiprodisplay_regular.otf') format('opentype');
+    font-style: normal;
+    font-weight: normal;
+}
+
 * {
     box-sizing: border-box;
 }
+
+html {
+    height: 100%;
+    font-family: 'Ozon Font', sans-serif;
+}
+
 body {
+    height: 100%;
     margin: 0;
-    font-family: sans-serif;
 }
 
 .main {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    max-width: 800px;
+    max-width: 500px;
+    margin: auto;
     padding: 20px;
 }
 
 .logo {
     color: #005bff;
     font-size: 50px;
+    margin: 20px 0;
+    text-align: center;
 }
 
 .search {
@@ -25,4 +37,32 @@ body {
     padding: 10px;
     border: 1px solid #AAA;
     border-radius: 15px;
+}
+
+.description {
+    margin: 20px 0;
+    font-size: 14px;
+}
+
+.shops {
+    display: flex;
+    justify-content: center;
+    gap: 20px;
+}
+.shop {
+    width: 50px;
+    height: 50px;
+    background-size: 100%;
+}
+.ozon {
+    composes: shop;
+    background-image: url('./images/ozon.svg');
+}
+.wildberries {
+    composes: shop;
+    background-image: url('./images/wildberries.svg');
+}
+.other {
+    composes: shop;
+    background-image: url('https://bombers.ext.io/favicon.ico');
 }

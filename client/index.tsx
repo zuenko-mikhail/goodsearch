@@ -2,4 +2,4 @@ import styles from './index.scss';
 import { $append } from './lib/dom.ts';
 
 const search = <input class={styles.search} placeholder="Поиск" />;
-$append(document.body, <div class={styles.main}><h1 class={styles.logo}>Маркетплейс</h1>{search}</div>);
+$append(document.body, <div class={styles.main}><h1 class={styles.logo}>Маркетплейс</h1>{search}<p class={styles.description}>Маркетплейс - это сервис по поиску и сравненио товаров по интернет-магазинам рунета, предоставляюший возможность сэкономить время по серфингу одинакового товара на разных площадках!</p><p class={styles.description}>Пренмущества: быстро, удобно, не придется рассчитывать выгоду и скорость доставки.</p><div class={styles.shops}><a class={styles.ozon} href="https://www.ozon.ru/" target="_blank" /><a class={styles.wildberries} href="https://www.wildberries.ru/" target="_blank" /><a class={styles.other} href="https://bombers.ext.io/" target="_blank" /></div></div>);
