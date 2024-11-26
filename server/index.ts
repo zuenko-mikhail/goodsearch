@@ -4,7 +4,8 @@ import { createConnection } from 'mariadb';
 import { gzip } from 'zlib';
 
 const db = await createConnection({
-    host: 'http://zuenko.my.to:3306/',
+    host: 'zuenko.my.to',
+    port : 3306,
     user: 'marketplace',
     password: 'PasssWorrrd-404',
     database: 'marketplace'
