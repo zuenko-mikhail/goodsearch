@@ -7,13 +7,13 @@ export function $insertBefore(refNode: Node, ...nodes: NodeArray) {
         else refNode.parentNode.insertBefore(node instanceof Node ? node : $T(node), refNode);
     }
 }
-export function $append(elem: HTMLElement, ...children: NodeArray) {
+export function $append(elem: Element, ...children: NodeArray) {
     for (const child of children) {
         if (Array.isArray(child)) $append(elem, ...child);
         else elem.appendChild(child instanceof Node ? child : $T(child));
     }
 }
-export function $prepend(elem: HTMLElement, ...children: NodeArray) {
+export function $prepend(elem: Element, ...children: NodeArray) {
     for (let i = children.length - 1; i >= 0; i--) {
         let child = children[i];
         if (Array.isArray(child)) $prepend(elem, ...child);
@@ -25,9 +25,15 @@ export function $prepend(elem: HTMLElement, ...children: NodeArray) {
     }
 }
 
-export function $remove(node: Node) {
-    if (!node?.parentNode) return;
-    return node.parentNode.removeChild(node);
+type OnlyNodeArray = Node | OnlyNodeArray[];
+export function $remove(...nodes: OnlyNodeArray[]) {
+    for (const node of nodes) {
+        if (Array.isArray(node)) $remove(...node);
+        else {
+            if (!node?.parentNode) continue;
+            node.parentNode.removeChild(node);
+        }
+    }
 }
 export function $replace(oldNode: Node, ...newNodes: NodeArray) {
     $insertBefore(oldNode, ...newNodes);
@@ -55,42 +61,42 @@ export function $T(text: any) {
     return document.createTextNode(text || '');
 }
 
-export function $on(elem: HTMLElement, event: string, callback: (event: Event) => void) {
+export function $on(elem: Element, event: string, callback: (event: Event) => void) {
     elem.addEventListener(event, callback);
 }
-export function $off(elem: HTMLElement, event: string, callback: (event: Event) => void) {
+export function $off(elem: Element, event: string, callback: (event: Event) => void) {
     elem.removeEventListener(event, callback);
 }
 
-export function $style(elem: HTMLElement, key: string, value: string) {
+export function $style(elem: HTMLElement | SVGElement, key: string, value: string) {
     elem.style[key] = value;
 }
-export function $setAttr(elem: HTMLElement, key: string, value: string) {
+export function $setAttr(elem: Element, key: string, value: string) {
     elem.setAttribute(key, value);
 }
-export function $removeAttrs(elem: HTMLElement, ...keys: string[]) {
+export function $removeAttrs(elem: Element, ...keys: string[]) {
     for (const key of keys) elem.removeAttribute(key);
 }
 
-export function $setClases(elem: HTMLElement, ...classes: string[]) {
+export function $setClases(elem: Element, ...classes: string[]) {
     elem.className = classes.join(' ');
 }
-export function $addClasses(elem: HTMLElement, ...classes: string[]) {
+export function $addClasses(elem: Element, ...classes: string[]) {
     const oldClasses = elem.className.split(' ');
     elem.className = [...oldClasses, ...classes].join(' ');
 }
-export function $removeClasses(elem: HTMLElement, ...classes: string[]) {
+export function $removeClasses(elem: Element, ...classes: string[]) {
     const oldClasses = elem.className.split(' ');
     elem.className = oldClasses.filter(c => !classes.includes(c)).join(' ');
 }
-export function $toggleClasses(elem: HTMLElement, ...classes: string[]) {
+export function $toggleClasses(elem: Element, ...classes: string[]) {
     const oldClasses = elem.className.split(' ');
     elem.className = [
         ...oldClasses.filter(c => !classes.includes(c)),
         ...classes.filter(c => !oldClasses.includes(c))
     ].join(' ');
 }
-export function $hasClasses(elem: HTMLElement, ...classes: string[]) {
+export function $hasClasses(elem: Element, ...classes: string[]) {
     const oldClasses = elem.className.split(' ');
     return classes.every(c => oldClasses.includes(c));
 }

@@ -1,0 +1,47 @@
+.good {
+    display: flex;
+    gap: 10px;
+    height: 150px;
+    margin-top: 20px;
+    padding: 10px;
+    border-radius: 15px;
+    color: black;
+    box-shadow: 0 0 5px #777;
+    text-decoration: none;
+    white-space: nowrap;
+    transition: box-shadow 0.2s;
+
+    &:hover {
+        box-shadow: 0 0 7px #777;
+    }
+}
+.img-container {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex: 0 0 auto;
+    width: 130px;
+    height: 130px;
+    background: #EFEFEF;
+    box-shadow: 0 0 3px #777;
+    border-radius: 10px;
+    overflow: hidden;
+}
+.info {
+    flex: 1;
+    overflow: hidden;
+}
+.img {
+    max-width: 100%;
+    max-height: 100%;
+}
+.name {
+    margin: 10px 0;
+    font-size: 20px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+.price {
+    font-size: 20px;
+    margin: 20px;
+}

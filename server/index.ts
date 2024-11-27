@@ -5,7 +5,7 @@ import { gzip } from 'zlib';
 
 const db = await createConnection({
     host: 'zuenko.my.to',
-    port : 3306,
+    port: 3306,
     user: 'marketplace',
     password: 'PasssWorrrd-404',
     database: 'marketplace'
@@ -41,17 +41,19 @@ createServer(function(req, res) {
         import(`./api/${path.slice(5)}.ts`).then(async function(module: { [key: string]: Function; }) {
             const method = req.method.toLowerCase();
             if (method in module) {
-                let body = '';
-                req.on('data', chunk => body += chunk);
+                let data = '';
+                req.on('data', chunk => data += chunk);
                 req.on('end', async function() {
-                    if (req.headers['content-type'].startsWith(types.json)) {
+                    let body = null;
+                    if (req.headers?.['content-type']?.startsWith(types.json)) {
                         try {
-                            body = JSON.parse(body);
+                            body = JSON.parse(data);
                         }
                         catch (e) {
                             return send(400, types.json, JSON.stringify({ error: 'Тело запроса не является JSON.' }));
                         }
                     }
+                    if (typeof body !== 'object' || body === null) body = {};
 
                     const [code, resp] = await module[method](db, { search, body });
                     send(code, types.json, JSON.stringify(resp));

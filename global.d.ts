@@ -1,8 +1,5 @@
 declare function jsxFactory(tag: any, props: any, ...children: any[]): any;
 declare namespace JSX {
-    type Element = HTMLElement | Text | any[];
-    type ElementType = any;
-
     type Excluded = 'className' | 'onclick' | 'ondblclick' | 'oncontextmenu' | 'onchange' | 'oninput' | 'onkeypress' | 'onkeyup' | 'onkeydown' | 'onfocus' | 'onblur' | 'onload';
     type HTMLIntrinsicElements = {
         [H in keyof HTMLElementTagNameMap]: Partial<Omit<HTMLElementTagNameMap[H], Excluded>> & {
