@@ -1,4 +1,5 @@
 import { createConnection } from 'mariadb';
+import process from 'process';
 
 export interface TableItem {
     id: number;
@@ -20,18 +21,22 @@ const db = await createConnection({
     database: 'marketplace'
 });
 
+const addGood = await db.prepare('REPLACE INTO goods (shop, id, name, price, oldPrice, maxItems, rating, comments, delivery) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)');
+const addImage = await db.prepare('REPLACE INTO goodsImages (shop, id, image) VALUES (?, ?, ?)');
+
 export async function appendToTable(shop: string, item: TableItem) {
-    await db.query(
-        'REPLACE INTO goods (shop, id, name, price, oldPrice, maxItems, rating, comments, delivery) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)',
-        [shop, item.id, item.name, item.price, item.oldPrice, item.maxItems, item.rating, item.comments, item.delivery]
-    );
-    await Promise.all(item.images.map(
-        async image => db.query(
-            'REPLACE INTO goodsImages (shop, id, image) VALUES (?, ?, ?)',
-            [shop, item.id, image]
-        )
-    ));
+    await db.beginTransaction();
+    await addGood.execute([shop, item.id, item.name, item.price, item.oldPrice, item.maxItems, item.rating, item.comments, item.delivery]);
+    await Promise.all(item.images.map(image => addImage.execute([shop, item.id, image])));
+    await db.commit();
 }
-export async function appendAllToTable(shop: string, items: TableItem[]) {
-    await Promise.all(items.map(item => appendToTable(shop, item)));
+export async function getLastId(shop: string) {
+    const [{ id }] = await db.query('SELECT MAX(id) AS id FROM goods WHERE shop = ?', [shop]);
+    return id;
 }
+
+process.on('exit', function() {
+    addGood.close();
+    addImage.close();
+    db.end();
+});

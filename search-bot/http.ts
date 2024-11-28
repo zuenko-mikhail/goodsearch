@@ -7,7 +7,14 @@ export default class Session {
 
     constructor(host: string) {
         this.host = host;
-        this.connection = connect(`https://${host}`);
+        this.reconnect();
+    }
+    reconnect() {
+        this.connection = connect(`https://${this.host}`);
+        this.connection.on('goaway', () => {
+            this.connection.close();
+            this.reconnect();
+        });
     }
 
     request(method: string, path: string, body?: string): Promise<string> {
@@ -27,7 +34,6 @@ export default class Session {
                     }
                 }
                 if ('location' in headers) {
-                    console.log('Redirecting to', headers['location']);
                     const location = new URL(headers['location'], `https://${this.host}`);
                     resolve(this.request(method, location.pathname + location.search + location.hash));
                 }
@@ -47,5 +53,9 @@ export default class Session {
     }
     post(path: string, body?: string) {
         return this.request('POST', path, body);
+    }
+
+    close() {
+        this.connection.close();
     }
 }

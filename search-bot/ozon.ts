@@ -1,5 +1,5 @@
 import { appendToTable, TableItem } from './db.ts';
-import Session from './request.ts';
+import Session from './http.ts';
 
 async function getApi(session: Session, path: string, layout: string) {
     const data = JSON.parse(await session.get('/api/entrypoint-api.bx/page/json/v2?url=' + encodeURIComponent(path)));
@@ -99,4 +99,5 @@ export default async function scanOzon() {
         }
         if (stopped) break;
     }
+    session.close();
 }
