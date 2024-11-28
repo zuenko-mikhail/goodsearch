@@ -1,15 +1,6 @@
 import { readFile } from 'fs/promises';
 import { createServer } from 'http';
-import { createConnection } from 'mariadb';
 import { gzip } from 'zlib';
-
-const db = await createConnection({
-    host: 'zuenko.my.to',
-    port: 3306,
-    user: 'marketplace',
-    password: 'PasssWorrrd-404',
-    database: 'marketplace'
-});
 
 const types = {
     txt: 'text/plain; charset=utf-8',
@@ -55,7 +46,7 @@ createServer(function(req, res) {
                     }
                     if (typeof body !== 'object' || body === null) body = {};
 
-                    const [code, resp] = await module[method](db, { search, body });
+                    const [code, resp] = await module[method]({ search, body });
                     send(code, types.json, JSON.stringify(resp));
                 });
             }
