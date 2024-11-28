@@ -28,10 +28,10 @@ function parseDate(input: string) {
 export default search(
     'www.ozon.ru',
     (query, page) => '/api/entrypoint-api.bx/page/json/v2?url=' + encodeURIComponent(`/search/?deny_category_prediction=true&from_global=true&layout_container=categorySearchMegapagination&layout_page_index=${page}&page=${page}&text=${query}`),
-    async function(response) {
+    function(response): Good[] {
         if (!response.widgetStates) return [];
         const items = JSON.parse(Object.entries(response.widgetStates as { [key: string]: string; }).find(([key]) => key.startsWith('searchResultsV2'))?.[1])?.items || [];
-        return await Promise.all<Good>(items.map(function({ mainState, multiButton, tileImage }) {
+        return items.map(function({ mainState, multiButton, tileImage }) {
             if (!multiButton?.ozonButton?.addToCartButtonWithQuantity?.action?.id) return null;
             const item: Good = {
                 link: `https://www.ozon.ru/product/${multiButton.ozonButton.addToCartButtonWithQuantity.action.id}/`,
@@ -71,6 +71,6 @@ export default search(
                 }
             }
             return item;
-        }));
+        });
     }
 );

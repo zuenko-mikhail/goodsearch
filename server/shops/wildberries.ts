@@ -10,9 +10,9 @@ function getImgPath(id: number) {
 export default search(
     'search.wb.ru',
     (query, page) => `/exactmatch/ru/common/v7/search?ab_testing=false&appType=1&curr=rub&dest=-366541&page=${page}&query=${query}&resultset=catalog&sort=popular&spp=30&suppressSpellcheck=false`,
-    async function({ data }): Promise<Good[]> {
+    function({ data }): Good[] {
         if (!data?.products?.length) return [];
-        return await Promise.all(data.products.map((good: { id: number; name: string; sizes: { price: { total: number; basic: number; }; }[]; totalQuantity: number; reviewRating: number; pics: number; }) => ({
+        return data.products.map((good: { id: number; name: string; sizes: { price: { total: number; basic: number; }; }[]; totalQuantity: number; reviewRating: number; pics: number; }) => ({
             link: `https://www.wildberries.ru/catalog/${good.id}/detail.aspx`,
             name: good.name,
             price: good.sizes[0].price.total / 100,
@@ -22,6 +22,6 @@ export default search(
             comments: null,
             delivery: null,
             images: Array(good.pics).fill(null).map((_, img) => `${getImgPath(good.id)}/${img + 1}.webp`)
-        })));
+        }));
     }
 );

@@ -15,7 +15,7 @@ export interface Good {
 export function search(
     host: string,
     getPath: (query: string, page: number) => string,
-    parse: (response: any) => Promise<Good[]>
+    parse: (response: any) => Good[]
 ) {
     return async function(query: string, pages = 1) {
         const session = new Session(host);

@@ -17,12 +17,14 @@ export default class Session {
         });
     }
 
-    request(method: string, path: string, body?: string): Promise<string> {
+    request(method: string, path: string, headers: { [key: string]: string; } = {}, body?: { [key: string]: any; }): Promise<string> {
         return new Promise((resolve, reject) => {
             const req = this.connection.request({
                 ':path': path,
                 ':method': method,
-                cookie: Object.entries(this.cookies).map(([key, value]) => `${key}=${value}`).join('; ')
+                cookie: Object.entries(this.cookies).map(([key, value]) => `${key}=${value}`).join('; '),
+                // 'content-type': body ? 'application/json' : undefined,
+                ...headers
             });
             let data = '';
             req.on('response', headers => {
@@ -34,6 +36,7 @@ export default class Session {
                     }
                 }
                 if ('location' in headers) {
+                    console.log(headers['location']);
                     const location = new URL(headers['location'], `https://${this.host}`);
                     resolve(this.request(method, location.pathname + location.search + location.hash));
                 }
@@ -43,16 +46,16 @@ export default class Session {
                 }
             });
             req.on('error', reject);
-            if (body) req.write(body);
+            if (body) req.write(JSON.stringify(body));
             req.end();
         });
     }
 
-    get(path: string) {
-        return this.request('GET', path);
+    get(path: string, headers?: { [key: string]: string; }) {
+        return this.request('GET', path, headers);
     }
-    post(path: string, body?: string) {
-        return this.request('POST', path, body);
+    post(path: string, headers?: { [key: string]: string; }, body?: { [key: string]: any; }) {
+        return this.request('POST', path, headers, body);
     }
 
     close() {

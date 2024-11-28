@@ -90,6 +90,10 @@ body {
         transform: scale(1.1);
     }
 }
+.joom {
+    composes: shop;
+    background-image: url('./images/joom.svg');
+}
 .ozon {
     composes: shop;
     background-image: url('./images/ozon.svg');
@@ -97,10 +101,6 @@ body {
 .wildberries {
     composes: shop;
     background-image: url('./images/wildberries.svg');
-}
-.other {
-    composes: shop;
-    background-image: url('https://bombers.ext.io/favicon.ico');
 }
 
 .goods {
