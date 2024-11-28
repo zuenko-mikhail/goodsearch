@@ -1,35 +1,32 @@
 import Good from './good.tsx';
 import styles from './index.scss';
 import { postApi } from './lib/api.ts';
-import { $append, $clear, $prepend, $remove } from './lib/dom.ts';
+import { $addClasses, $append, $clear, $remove, $removeClasses } from './lib/dom.ts';
 
-const $logo: HTMLHeadingElement = <h1 class={styles.logo}>Маркетплейс</h1>;
-const $search: HTMLInputElement = <input class={styles.search} placeholder="Поиск" autofocus onInput={function() {
+const $search: HTMLInputElement = <input class={styles.search} placeholder="Что вы хотите найти?" autofocus onInput={function() {
     history.pushState(null, null, $search.value === '' ? '/' : `?query=${encodeURIComponent($search.value)}`);
     historyUpdated();
 }} />;
-const $description: HTMLElement[] = <><p class={styles.description}>Маркетплейс - это сервис по поиску и сравнению товаров по интернет-магазинам рунета, предоставляющий возможность сэкономить время по серфингу одинаковых товаров на разных площадках!</p><p class={styles.description}>Преимущества: быстро, удобно, не придется рассчитывать выгоду и скорость доставки.</p><div class={styles.shops}><a class={styles.ozon} href="https://www.ozon.ru/" target="_blank" /><a class={styles.wildberries} href="https://www.wildberries.ru/" target="_blank" /><a class={styles.other} href="https://bombers.ext.io/" target="_blank" /></div></>;
-const $goods: HTMLDivElement = <div />;
-const $main: HTMLDivElement = <div class={styles.main}>{$logo}{$search}{$description}</div>;
+const $main: HTMLDivElement = <div class={styles.main}><h1 class={styles.logo}>Goodsearch</h1>{$search}<div class={styles.info}><p class={styles.description}>Маркетплейс - это сервис по поиску и сравнению товаров по интернет-магазинам рунета, предоставляющий возможность сэкономить время по серфингу одинаковых товаров на разных площадках!</p><p class={styles.description}>Преимущества: быстро, удобно, не придется рассчитывать выгоду и скорость доставки.</p><div class={styles.shops}><a class={styles.ozon} href="https://www.ozon.ru/" target="_blank" /><a class={styles.wildberries} href="https://www.wildberries.ru/" target="_blank" /><a class={styles.other} href="https://bombers.ext.io/" target="_blank" /></div></div></div>;
 $append(document.body, $main);
 
+const $goods: HTMLDivElement = <div class={styles.goods} />;
 async function historyUpdated() {
     const query = Object.fromEntries(location.search.slice(1).split('&').map(a => a.split('=').map(b => decodeURIComponent(b)))).query || '';
     $search.value = query;
     $clear($goods);
     if (query === '') {
-        $prepend($main, $logo);
-        $append($main, $description);
+        $removeClasses($main, styles.searching);
         $remove($goods);
     }
     else {
-        $remove($logo, $description);
+        $addClasses($main, styles.searching);
         const { results } = await postApi('search', { query });
         if ($search.value !== query) return;
         for (const result of results) {
             $append($goods, Good(result.link, result.images[0], result.name, result.price));
         }
-        $append($main, $goods);
+        $append(document.body, $goods);
     }
 }
 addEventListener('popstate', historyUpdated);
