@@ -48,7 +48,7 @@ export default search(
             for (const { atom } of mainState) {
                 switch (atom.type) {
                     case 'textAtom':
-                        item.name = atom.textAtom.text;
+                        item.name = atom.textAtom.text.replace(/&#x([0-9A-F]{2});/g, (_: string, n: string) => String.fromCharCode(parseInt(n, 16))).replace(/&#([0-9A-F]{2});/g, (_: string, n: string) => String.fromCharCode(+n));
                         break;
                     case 'priceV2':
                         for (const price of atom.priceV2.price) {

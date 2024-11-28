@@ -66,11 +66,12 @@ body {
     flex-direction: column;
     gap: 20px;
     position: absolute;
-    top: 30px;
+    top: 45px;
     max-width: 800px;
     padding: 20px;
 }
 .description {
+    margin: 0;
     font-size: 14px;
 }
 .shops {
