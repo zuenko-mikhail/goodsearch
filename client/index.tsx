@@ -3,7 +3,7 @@ import Good from './good.tsx';
 import styles from './index.scss';
 import { postApi } from './lib/api.ts';
 import { $addClasses, $append, $clear, $remove, $removeClasses } from './lib/dom.ts';
-import { deleteParam, getParam, setParam } from './urlParams.ts';
+import { deleteParam, getParam, getParams, setParam } from './urlParams.ts';
 
 const $search: HTMLInputElement = <input class={styles.search} type="search" placeholder="Что вы хотите найти?" autofocus spellcheck={false} onInput={function() {
     if ($search.value === '') deleteParam('query');
@@ -38,7 +38,7 @@ function historyUpdated() {
     else {
         $addClasses($main, styles.searching);
         timerId = setTimeout(async function() {
-            const { results } = await postApi('search', { query });
+            const { results } = await postApi('search', getParams());
             if (query !== $search.value) return;
             for (const result of results) {
                 $append($goods, Good(getLink(result.shop, result.id), result.images[0], result.name, result.price));

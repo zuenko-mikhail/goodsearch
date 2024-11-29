@@ -7,3 +7,17 @@
     border: 1px solid #005bff;
     border-radius: 15px;
 }
+.title {
+    margin: 0;
+    margin-bottom: 10px;
+    text-align: center;
+}
+.filter {
+    display: flex;
+    gap: 5px;
+    margin-top: 5px;
+    white-space: nowrap;
+}
+.control {
+    width: 100%;
+}
