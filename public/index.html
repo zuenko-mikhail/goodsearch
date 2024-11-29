@@ -7,5 +7,28 @@
         <script src="./bundle.js" defer></script>
         <link rel="stylesheet" href="./styles.css">
     </head>
-    <body></body>
+    <body>
+        <div class="filters">
+            <h2 class="filter-title">Сортировка</h2>
+            <div class="filter-item">
+                <label for="minPrice" style="display: block; margin-bottom: 5px;">Минимальная цена:</label>
+                <input
+                    id="minPrice"
+                    type="text"
+                    class="filter-input"
+                    placeholder="Введите цену"
+                />
+            </div>
+            <div class="filter-item">
+                <label>
+                    <input type="checkbox" class="filter-checkbox" /> Товар со скидкой
+                </label>
+            </div>
+            <div class="filter-item">
+                <label>
+                    <input type="checkbox" class="filter-checkbox" /> В наличии
+                </label>
+            </div>
+        </div>
+    </body>
 </html>
