@@ -3,7 +3,7 @@ import styles from './index.scss';
 import { postApi } from './lib/api.ts';
 import { $addClasses, $append, $clear, $remove, $removeClasses } from './lib/dom.ts';
 
-const $search: HTMLInputElement = <input class={styles.search} placeholder="Что вы хотите найти?" autofocus spellcheck={false} onInput={function() {
+const $search: HTMLInputElement = <input class={styles.search} type="search" placeholder="Что вы хотите найти?" autofocus spellcheck={false} onInput={function() {
     history.pushState(null, null, $search.value === '' ? '/' : `?query=${encodeURIComponent($search.value)}`);
     historyUpdated();
 }} />;
