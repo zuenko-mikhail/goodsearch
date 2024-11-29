@@ -7,6 +7,15 @@
         <script src="./bundle.js" defer></script>
         <link rel="stylesheet" href="./styles.css">
     </head>
+    <style>
+        .filters {
+            position: relative;
+            top: 50px;
+            padding: 10px;
+            max-width: 210px;
+            left: 5px;
+        }
+    </style>
     <body>
         <div class="filters">
             <h2 class="filter-title">Сортировка</h2>
@@ -27,6 +36,17 @@
             <div class="filter-item">
                 <label>
                     <input type="checkbox" class="filter-checkbox" /> В наличии
+                </label>
+            </div>
+            <h2 class="filter-title">Сроки доставки</h2>
+            <div class="filter-item">
+                <label>
+                    <input type="checkbox" class="filter-checkbox" /> Меньше трех-дней
+                </label>
+            </div>
+            <div class="filter-item">
+                <label>
+                    <input type="checkbox" class="filter-checkbox" /> Сегодня
                 </label>
             </div>
         </div>
