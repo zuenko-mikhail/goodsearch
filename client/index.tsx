@@ -11,8 +11,8 @@ const $main: HTMLDivElement = <div class={styles.main}><h1 class={styles.logo}>G
 $append(document.body, $main);
 
 const $goods: HTMLDivElement = <div class={styles.goods} />;
-let timerId: ReturnType<type setTimeout>;
-async function historyUpdated() {
+let timerId: ReturnType<typeof setTimeout>;
+function historyUpdated() {
     const query = Object.fromEntries(location.search.slice(1).split('&').map(a => a.split('=').map(b => decodeURIComponent(b)))).query || '';
     $search.value = query;
     $clear($goods);
@@ -22,16 +22,14 @@ async function historyUpdated() {
     }
     else {
         $addClasses($main, styles.searching);
-        const { results } = await postApi('search', { query });
         clearTimeout(timerId);
-        timerId = setTimeout(function(){
+        timerId = setTimeout(async function(){
+            const { results } = await postApi('search', { query });
             for (const result of results) {
                 $append($goods, Good(result.link, result.images[0], result.name, result.price));
             }
-            $append(document.body, $goods);  
-        }, 1000); // Перерисовываем страницу через 1 секунду после очистки
-//Убираем, она тут не нужна        if ($search.value !== query) return;
-        
+            $append(document.body, $goods);
+        }, 500);
     }
 }
 addEventListener('popstate', historyUpdated);
