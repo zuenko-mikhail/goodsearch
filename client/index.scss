@@ -90,6 +90,36 @@ body {
         transform: scale(1.1);
     }
 }
+.button {
+    display: inline-block;
+    padding: 10px 20px;
+    margin: 10px;
+    font-size: 16px;
+    font-family: 'Inter', sans-serif;
+    color: #fff;
+    background-color: #005bff;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    text-align: center;
+    text-decoration: none;
+    transition: background-color 250ms ease-in-out, transform 150ms ease;
+
+    &:hover {
+        background-color: #0041cc;
+        transform: scale(1.05);
+    }
+
+    &:active {
+        background-color: #003399;
+        transform: scale(0.95);
+    }
+
+    &:focus {
+        outline: none;
+        box-shadow: 0 0 0 3px rgba(0, 91, 255, 0.5);
+    }
+}
 .joom {
     composes: shop;
     background-image: url('./images/joom.svg');
