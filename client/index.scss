@@ -90,62 +90,6 @@ body {
         transform: scale(1.1);
     }
 }
-.button {
-    display: inline-block;
-    padding: 10px 20px;
-    margin: 10px;
-    font-size: 16px;
-    font-family: 'Inter', sans-serif;
-    color: #fff;
-    background-color: #005bff;
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
-    text-align: center;
-    text-decoration: none;
-    transition: background-color 250ms ease-in-out, transform 150ms ease;
-
-    &:hover {
-        background-color: #0041cc;
-        transform: scale(1.05);
-    }
-
-    &:active {
-        background-color: #003399;
-        transform: scale(0.95);
-    }
-
-    &:focus {
-        outline: none;
-        box-shadow: 0 0 0 3px rgba(0, 91, 255, 0.5);
-    }
-}
-.sidebar {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 250px;
-    height: 100%;
-    background-color: #005bff;
-    color: #fff; //Тут для белого текста
-    padding: 20px;
-    box-shadow: 2px 0 5px rgba(0, 0, 0, 0.1);
-    overflow-y: auto;
-    z-index: 2; //другие элементы
-
-    .filter-title {
-        font-size: 18px;
-        margin-bottom: 10px;
-    }
-
-    .filter-item {
-        margin-bottom: 15px;
-    }
-
-    .filter-checkbox {
-        margin-right: 10px;
-    }
-}
 .joom {
     composes: shop;
     background-image: url('./images/joom.svg');

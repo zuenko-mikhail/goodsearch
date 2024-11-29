@@ -1,8 +1,10 @@
 import Session from './http.ts';
 
 export interface Good {
-    link: string;
+    shop: string;
+    id: number;
     name: string;
+    supplier: string;
     price: number;
     oldPrice: number;
     maxItems: number;

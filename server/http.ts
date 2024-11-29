@@ -23,7 +23,6 @@ export default class Session {
                 ':path': path,
                 ':method': method,
                 cookie: Object.entries(this.cookies).map(([key, value]) => `${key}=${value}`).join('; '),
-                // 'content-type': body ? 'application/json' : undefined,
                 ...headers
             });
             let data = '';
@@ -36,7 +35,6 @@ export default class Session {
                     }
                 }
                 if ('location' in headers) {
-                    console.log(headers['location']);
                     const location = new URL(headers['location'], `https://${this.host}`);
                     resolve(this.request(method, location.pathname + location.search + location.hash));
                 }

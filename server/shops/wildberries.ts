@@ -12,9 +12,11 @@ export default search(
     (query, page) => `/exactmatch/ru/common/v7/search?ab_testing=false&appType=1&curr=rub&dest=-366541&page=${page}&query=${query}&resultset=catalog&sort=popular&spp=30&suppressSpellcheck=false`,
     function({ data }): Good[] {
         if (!data?.products?.length) return [];
-        return data.products.map((good: { id: number; name: string; sizes: { price: { total: number; basic: number; }; }[]; totalQuantity: number; reviewRating: number; pics: number; }) => ({
-            link: `https://www.wildberries.ru/catalog/${good.id}/detail.aspx`,
+        return data.products.map((good: { id: number; name: string; supplier: string; sizes: { price: { total: number; basic: number; }; }[]; totalQuantity: number; reviewRating: number; pics: number; }) => ({
+            shop: 'wildberries',
+            id: good.id,
             name: good.name,
+            supplier: good.supplier,
             price: good.sizes[0].price.total / 100,
             oldPrice: good.sizes[0].price.basic / 100,
             maxItems: good.totalQuantity,

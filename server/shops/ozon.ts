@@ -34,8 +34,10 @@ export default search(
         return items.map(function({ mainState, multiButton, tileImage }) {
             if (!multiButton?.ozonButton?.addToCartButtonWithQuantity?.action?.id) return null;
             const item: Good = {
-                link: `https://www.ozon.ru/product/${multiButton.ozonButton.addToCartButtonWithQuantity.action.id}/`,
+                shop: 'ozon',
+                id: multiButton.ozonButton.addToCartButtonWithQuantity.action.id,
                 name: null,
+                supplier: null,
                 price: null,
                 oldPrice: null,
                 maxItems: multiButton.ozonButton.addToCartButtonWithQuantity.maxItems,

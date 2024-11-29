@@ -11,22 +11,33 @@ const $main: HTMLDivElement = <div class={styles.main}><h1 class={styles.logo}>G
 $append(document.body, $main);
 
 const $goods: HTMLDivElement = <div class={styles.goods} />;
+
+function getLink(shop: string, id: number) {
+    switch (shop) {
+        case 'joom': return `https://www.joom.ru/ru/products/${id}`;
+        case 'ozon': return `https://www.ozon.ru/product/${id}/`;
+        case 'wildberries': return `https://www.wildberries.ru/catalog/${id}/detail.aspx`;
+        default: return '';
+    }
+}
+
 let timerId: ReturnType<typeof setTimeout>;
 function historyUpdated() {
     const query = Object.fromEntries(location.search.slice(1).split('&').map(a => a.split('=').map(b => decodeURIComponent(b)))).query || '';
     $search.value = query;
     $clear($goods);
+    clearTimeout(timerId);
     if (query === '') {
         $removeClasses($main, styles.searching);
         $remove($goods);
     }
     else {
         $addClasses($main, styles.searching);
-        clearTimeout(timerId);
-        timerId = setTimeout(async function(){
+        timerId = setTimeout(async function() {
             const { results } = await postApi('search', { query });
+            if (query !== $search.value) return;
             for (const result of results) {
-                $append($goods, Good(result.link, result.images[0], result.name, result.price));
+                $append($goods, Good(getLink(result.shop, result.id), result.images[0], result.name, result.price));
             }
             $append(document.body, $goods);
         }, 500);
