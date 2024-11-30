@@ -1,4 +1,4 @@
-import { Good, search } from '../search.ts';
+import { Product, search } from '../search.ts';
 
 /** Возвращает ссылку на картинку товара */
 function getImgPath(id: number) {
@@ -11,20 +11,20 @@ function getImgPath(id: number) {
 export default search(
     'search.wb.ru',
     (query, page) => `/exactmatch/ru/common/v7/search?ab_testing=false&appType=1&curr=rub&dest=-366541&page=${page}&query=${query}&resultset=catalog&sort=popular&spp=30&suppressSpellcheck=false`,
-    function({ data }): Good[] {
+    function({ data }): Product[] {
         if (!data?.products?.length) return [];
-        return data.products.map((good: { id: number; name: string; supplier: string; sizes: { price: { total: number; basic: number; }; }[]; totalQuantity: number; reviewRating: number; pics: number; }) => ({
+        return data.products.map((product: { id: number; name: string; supplier: string; sizes: { price: { total: number; basic: number; }; }[]; totalQuantity: number; reviewRating: number; pics: number; }) => ({
             shop: 'wildberries',
-            id: good.id,
-            name: good.name,
-            supplier: good.supplier,
-            price: good.sizes[0].price.total / 100,
-            oldPrice: good.sizes[0].price.basic / 100,
-            maxItems: good.totalQuantity,
-            rating: good.reviewRating,
+            id: product.id,
+            name: product.name,
+            supplier: product.supplier,
+            price: product.sizes[0].price.total / 100,
+            oldPrice: product.sizes[0].price.basic / 100,
+            maxItems: product.totalQuantity,
+            rating: product.reviewRating,
             comments: null,
             delivery: null,
-            images: Array(good.pics).fill(null).map((_, img) => `${getImgPath(good.id)}/${img + 1}.webp`)
+            images: Array(product.pics).fill(null).map((_, img) => `${getImgPath(product.id)}/${img + 1}.webp`)
         }));
     }
 );

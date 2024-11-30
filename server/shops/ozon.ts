@@ -1,4 +1,4 @@
-import { Good, search } from '../search.ts';
+import { Product, search } from '../search.ts';
 
 /** Парсит дату */
 function parseDate(input: string) {
@@ -29,12 +29,12 @@ function parseDate(input: string) {
 export default search(
     'www.ozon.ru',
     (query, page) => '/api/entrypoint-api.bx/page/json/v2?url=' + encodeURIComponent(`/search/?deny_category_prediction=true&from_global=true&layout_container=categorySearchMegapagination&layout_page_index=${page}&page=${page}&text=${query}`),
-    function(response): Good[] {
+    function(response): Product[] {
         if (!response.widgetStates) return [];
-        const items = JSON.parse(Object.entries(response.widgetStates as { [key: string]: string; }).find(([key]) => key.startsWith('searchResultsV2'))?.[1])?.items || [];
-        return items.map(function({ mainState, multiButton, tileImage }) {
+        const products = JSON.parse(Object.entries(response.widgetStates as { [key: string]: string; }).find(([key]) => key.startsWith('searchResultsV2'))?.[1])?.items || [];
+        return products.map(function({ mainState, multiButton, tileImage }) {
             if (!multiButton?.ozonButton?.addToCartButtonWithQuantity?.action?.id) return null;
-            const item: Good = {
+            const product: Product = {
                 shop: 'ozon',
                 id: multiButton.ozonButton.addToCartButtonWithQuantity.action.id,
                 name: null,
@@ -47,33 +47,33 @@ export default search(
                 delivery: parseDate(multiButton.ozonButton.addToCartButtonWithQuantity.text),
                 images: tileImage.items.filter(i => i.type === 'image').map(i => i.image.link)
             };
-            if (item.delivery !== null) item.delivery /= 1000 * 3600;
+            if (product.delivery !== null) product.delivery /= 1000 * 3600;
             for (const { atom } of mainState) {
                 switch (atom.type) {
                     case 'textAtom':
-                        item.name = atom.textAtom.text.replace(/&#x([0-9A-F]{2});/g, (_: string, n: string) => String.fromCharCode(parseInt(n, 16))).replace(/&#([0-9A-F]{2});/g, (_: string, n: string) => String.fromCharCode(+n));
+                        product.name = atom.textAtom.text.replace(/&#x([0-9A-F]{2});/g, (_: string, n: string) => String.fromCharCode(parseInt(n, 16))).replace(/&#([0-9A-F]{2});/g, (_: string, n: string) => String.fromCharCode(+n));
                         break;
                     case 'priceV2':
                         for (const price of atom.priceV2.price) {
-                            if (price.textStyle === 'PRICE') item.price = +price.text.replace(/ |₽/g, '') || null;
-                            if (price.textStyle === 'ORIGINAL_PRICE') item.oldPrice = +price.text.replace(/ |₽/g, '') || null; // fix (null)
+                            if (price.textStyle === 'PRICE') product.price = +price.text.replace(/ |₽/g, '') || null;
+                            if (price.textStyle === 'ORIGINAL_PRICE') product.oldPrice = +price.text.replace(/ |₽/g, '') || null; // fix (null)
                         }
                         break;
                     case 'labelList':
                         for (const { title, testInfo } of atom.labelList.items) {
                             switch (testInfo.automatizationId) {
                                 case 'tile-list-rating':
-                                    item.rating = +title;
+                                    product.rating = +title;
                                     break;
                                 case 'tile-list-comments':
-                                    item.comments = parseInt(title.replace(/ /g, ''));
+                                    product.comments = parseInt(title.replace(/ /g, ''));
                                     break;
                             }
                         }
                         break;
                 }
             }
-            return item;
+            return product;
         });
     }
 );

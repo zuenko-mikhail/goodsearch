@@ -1,26 +1,4 @@
-.filters {
-    position: fixed;
-    top: 70px;
-    left: 20px;
-    width: 250px;
-    padding: 20px;
-    border: 1px solid #005bff;
-    border-radius: 15px;
-}
-.title {
-    margin: 0;
-    margin-bottom: 10px;
-    text-align: center;
-}
-
-.goods {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 15px;
-    margin: 70px 30px 30px 290px;
-}
-
-.good {
+.product {
     width: 200px;
     height: 300px;
     padding: 10px;
@@ -28,10 +6,9 @@
     color: black;
     box-shadow: 0 0 5px #777;
     text-decoration: none;
-    transition: box-shadow 0.2s;
 
     &:hover {
-        box-shadow: 0 0 7px #777;
+        box-shadow: 0 0 7px #333;
     }
 }
 .img-container {

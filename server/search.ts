@@ -1,6 +1,6 @@
 import Session from './http.ts';
 
-export interface Good {
+export interface Product {
     shop: string;
     id: number;
     name: string;
@@ -23,7 +23,7 @@ export interface Good {
 export function search(
     host: string,
     getPath: (query: string, page: number) => string,
-    parse: (response: any) => Good[]
+    parse: (response: any) => Product[]
 ) {
     return async function(query: string, pages = 1) {
         const session = new Session(host);
