@@ -12,6 +12,7 @@ const $filters = (
     <div class={styles.filters}><h2 class={styles.title}>Фильтры</h2>{select('sorting', 'Сортировка', [
         ['', 'По рейтингу'],
         ['comments', 'По отзывам'],
+        ['discount', 'По скидке'],
         ['priceUp', 'По цене ↑'],
         ['priceDown', 'По цене ↓']
     ])}{inputNumber('minPrice', 'Мин. цена')}{inputNumber('maxPrice', 'Макс. цена')}{select('delivery', 'Доставка', [

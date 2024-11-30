@@ -29,6 +29,7 @@ function getFavoriteQueries(): FavoriteQuery[] {
 /** Проверяет наличие текущего запроса в избранном */
 export function hasFavoriteQuery() {
     const params = getParams();
+    delete params.sorting;
     const queries = getFavoriteQueries();
     return queries.some(query => favParams.every(name => !params[name] && !query[name] || params[name] === query[name]));
 }
@@ -39,7 +40,6 @@ export function addFavoriteQuery() {
 
     const params = getParams();
     const query: FavoriteQuery = { query: params.query };
-    if (params.sorting) query.sorting = params.sorting;
     if (params.minPrice) query.minPrice = +params.minPrice;
     if (params.maxPrice) query.maxPrice = +params.maxPrice;
     if (params.delivery) query.delivery = +params.delivery;
@@ -51,8 +51,10 @@ export function addFavoriteQuery() {
 
 /** Удаляет текущий запрос из избранного */
 export function removeFavoriteQuery() {
+    const params = getParams();
+    delete params.sorting;
     const queries = getFavoriteQueries();
-    const index = queries.findIndex(query => favParams.every(name => !getParams()[name] && !query[name] || getParams()[name] === query[name]));
+    const index = queries.findIndex(query => favParams.every(name => !params[name] && !query[name] || params[name] === query[name]));
     queries.splice(index, 1);
     localStorage.setItem('favorite-queries', JSON.stringify(queries));
 }
@@ -75,7 +77,7 @@ onChangeParams(async function() {
         $append($favQueries, $header, $loading);
 
         for (const favQuery of queries) {
-            const { products }: { products: Product[]; } = await postApi('search', favQuery);
+            const { products }: { products: Product[]; } = await postApi('search', { sorting: 'discount', ...favQuery });
             $remove($loading);
 
             const $favQuery = <div class={styles.query}><h3 class={styles.header} onClick={
