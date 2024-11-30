@@ -1,8 +1,9 @@
 import { Product } from '../product.ts';
 import { inputNumber, select } from './filters.tsx';
 import { postApi } from './lib/api.ts';
-import { $append, $clear, $remove } from './lib/dom.ts';
+import { $append, $clear, $insertBefore, $remove } from './lib/dom.ts';
 import styles from './list-products.scss';
+import { $loading } from './loading.tsx';
 import { renderProducts } from './product.tsx';
 import { getParam, getParams, onChangeParams } from './url-params.ts';
 
@@ -28,10 +29,15 @@ onChangeParams(async function() {
     $clear($products);
     const query = getParam('query') || '';
     if (query) {
+        $append(document.body, $products);
+        $append($products, $loading);
+
         const { products }: { products: Product[]; } = await postApi('search', getParams());
+        $remove($loading);
         if (query !== (getParam('query') || '')) return;
+
         $append($products, renderProducts(products));
-        $append(document.body, $filters, $products);
+        $insertBefore($products, $filters);
     }
     else $remove($filters, $products);
 });

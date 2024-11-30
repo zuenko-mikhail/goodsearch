@@ -5,6 +5,7 @@
 .queries {
     padding-top: 350px;
     padding-bottom: 20px;
+    text-align: center;
 }
 
 .query {
@@ -39,6 +40,7 @@
 }
 .products {
     display: flex;
+    justify-content: center;
     gap: 15px;
     padding: 20px;
     overflow-x: auto;
