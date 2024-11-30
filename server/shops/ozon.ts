@@ -1,5 +1,6 @@
 import { Good, search } from '../search.ts';
 
+/** Парсит дату */
 function parseDate(input: string) {
     const today = new Date();
     today.setHours(0, 0, 0, 0);

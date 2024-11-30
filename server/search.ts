@@ -14,6 +14,12 @@ export interface Good {
     images: string[];
 }
 
+/**
+ * Функция для упрощения запросов к магазинам для поиска товаров
+ * @param host домен магазина
+ * @param getPath функция для получения пути API
+ * @param parse функция для парсинга ответа
+ */
 export function search(
     host: string,
     getPath: (query: string, page: number) => string,

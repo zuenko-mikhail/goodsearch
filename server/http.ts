@@ -1,5 +1,7 @@
 import { ClientHttp2Session, connect } from 'http2';
 
+
+/** Класс для работы с HTTP запросами */
 export default class Session {
     host: string;
     connection: ClientHttp2Session;
@@ -9,6 +11,7 @@ export default class Session {
         this.host = host;
         this.reconnect();
     }
+    /** Переподключение */
     reconnect() {
         this.connection = connect(`https://${this.host}`);
         this.connection.on('goaway', () => {
@@ -17,6 +20,13 @@ export default class Session {
         });
     }
 
+    /**
+     * Отправляет запрос
+     * @param method метод
+     * @param path путь
+     * @param headers заголовки
+     * @param body тело (есть только при POST-запросе)
+     */
     request(method: string, path: string, headers: { [key: string]: string; } = {}, body?: { [key: string]: any; }): Promise<string> {
         return new Promise((resolve, reject) => {
             const req = this.connection.request({
@@ -49,13 +59,16 @@ export default class Session {
         });
     }
 
+    /** Отправляет GET-запрос */
     get(path: string, headers?: { [key: string]: string; }) {
         return this.request('GET', path, headers);
     }
+    /** Отправляет POST-запрос */
     post(path: string, headers?: { [key: string]: string; }, body?: { [key: string]: any; }) {
         return this.request('POST', path, headers, body);
     }
 
+    /** Закрывает соединение */
     close() {
         this.connection.close();
     }
