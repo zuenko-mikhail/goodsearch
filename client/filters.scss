@@ -1,14 +1,21 @@
-.title {
-    margin: 0;
-    margin-bottom: 10px;
-    text-align: center;
-}
 .filter {
     display: flex;
     gap: 5px;
-    margin-top: 5px;
+    margin-top: 5px 7px;
     white-space: nowrap;
 }
 .control {
     width: 100%;
+    padding: 5px;
+    border: 1px solid #AAA;
+    border-radius: 10px;
+
+    &:hover {
+        border-color: #005BFF;
+    }
+    &:focus {
+        border-color: #005BFF;
+        box-shadow: inset 0 0 0 1px #005BFF;
+        outline: none;
+    }
 }
