@@ -3,7 +3,7 @@
     text-align: center;
 }
 .queries {
-    padding-top: 350px;
+    padding-top: 270px;
     padding-bottom: 20px;
     text-align: center;
 }
@@ -19,28 +19,38 @@
     display: flex;
     align-items: center;
     justify-content: space-between;
+    position: relative;
     height: 30px;
     margin: 0;
     padding: 5px;
+    padding-left: 30px;
     box-shadow: 0 0 5px #000;
     user-select: none;
     cursor: pointer;
+
+    &::before {
+        content: '';
+        position: absolute;
+        left: 5px;
+        width: 20px;
+        height: 20px;
+        background: url('./images/star-black.svg') center / 100%;
+    }
 }
 .delete {
     width: 24px;
     height: 24px;
-    background: #DDD;
+    background: #DDD url('./images/cross.svg') center / 50% no-repeat;
     border: 1px solid #AAA;
     border-radius: 50%;
     cursor: pointer;
 
     &:hover {
-        background: #CCC;
+        background-color: #CCC;
     }
 }
 .products {
     display: flex;
-    justify-content: center;
     gap: 15px;
     padding: 20px;
     overflow-x: auto;

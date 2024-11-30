@@ -3,7 +3,7 @@ type NodeArray = any[] | NodeArray[];
 export function $insertBefore(refNode: Node, ...nodes: NodeArray) {
     if (!refNode.parentNode) return;
     for (const node of nodes) {
-        if (Array.isArray(nodes)) $insertBefore(refNode, ...node);
+        if (Array.isArray(node)) $insertBefore(refNode, ...node);
         else refNode.parentNode.insertBefore(node instanceof Node ? node : $T(node), refNode);
     }
 }

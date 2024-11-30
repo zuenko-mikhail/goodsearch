@@ -108,18 +108,16 @@ body {
     margin: 70px 30px 30px 290px;
 }
 
-.info {
+.shops-container {
     display: flex;
     flex-direction: column;
-    gap: 20px;
+    align-items: center;
+    gap: 10px;
     position: absolute;
     top: 45px;
-    max-width: 800px;
     padding: 20px;
-}
-.description {
-    margin: 0;
     font-size: 14px;
+    font-weight: bold;
 }
 .shops {
     display: flex;

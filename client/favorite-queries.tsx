@@ -86,7 +86,7 @@ onChangeParams(async function() {
                 localStorage.setItem('favorite-queries', JSON.stringify(queries));
                 $remove($favQuery);
                 if (queries.length === 0) $remove($favQueries);
-            }}>X</button></h3><div class={styles.products} onMouseWheel={onMouseWheel}>{renderProducts(products)}</div></div>;
+            }} /></h3><div class={styles.products} onMouseWheel={onMouseWheel}>{renderProducts(products)}</div></div>;
 
             $append($favQueries, $favQuery);
         }
