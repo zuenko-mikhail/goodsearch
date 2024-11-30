@@ -6,7 +6,12 @@ import { getParam, getParams } from './urlParams.ts';
 
 /** Элемент фильтров */
 const $filters = (
-    <div class={styles.filters}><h2 class={styles.title}>Фильтры</h2>{inputNumber('minPrice', 'Мин. цена', loadGoods)}{inputNumber('maxPrice', 'Макс. цена', loadGoods)}{select('delivery', 'Доставка', [
+    <div class={styles.filters}><h2 class={styles.title}>Фильтры</h2>{select('sorting', 'Сортировка', [
+        ['', 'По рейтингу'],
+        ['comments', 'По отзывам'],
+        ['priceUp', 'По цене ↑'],
+        ['priceDown', 'По цене ↓']
+    ], loadGoods)}{inputNumber('minPrice', 'Мин. цена', loadGoods)}{inputNumber('maxPrice', 'Макс. цена', loadGoods)}{select('delivery', 'Доставка', [
         ['', 'В любое время'],
         ['0', 'Сегодня'],
         ['1', 'Завтра'],

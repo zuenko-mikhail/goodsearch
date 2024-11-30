@@ -8,7 +8,7 @@ import { getParam, setParam } from './urlParams.ts';
  * @param onChange - функция обратного вызова при изменении
  */
 export function inputNumber(param: string, name: string, onChange: () => void): HTMLInputElement {
-    const $input = <input class={styles.control} type="number" onInput={function(event) {
+    const $input = <input class={styles.control} type="number" min="0" onInput={function(event) {
         setParam(param, (event.target as HTMLInputElement).value);
         onChange();
     }} />;
