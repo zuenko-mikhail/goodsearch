@@ -1,22 +1,16 @@
 import styles from './filters.scss';
-import { getParam, setParam } from './urlParams.ts';
+import { getParam, onChangeParams, setParam } from './url-params.ts';
 
 /**
  * Поле ввода числа
  * @param param - назавание параметра URL
  * @param name - название фильтра
- * @param onChange - функция обратного вызова при изменении
  */
-export function inputNumber(param: string, name: string, onChange: () => void): HTMLInputElement {
+export function inputNumber(param: string, name: string): HTMLInputElement {
     const $input = <input class={styles.control} type="number" min="0" onInput={function(event) {
         setParam(param, (event.target as HTMLInputElement).value);
-        onChange();
     }} />;
-    function update() {
-        $input.value = getParam(param) || '';
-    }
-    addEventListener('popstate', update);
-    update();
+    onChangeParams(() => $input.value = getParam(param) || '');
     return <div class={styles.filter}>{name}:{$input}</div>;
 }
 
@@ -24,18 +18,12 @@ export function inputNumber(param: string, name: string, onChange: () => void): 
  * Чекбокс
  * @param param - назавание параметра URL
  * @param name - название фильтра
- * @param onChange - функция обратного вызова при изменении
  */
-export function checkbox(param: string, name: string, onChange: () => void): HTMLInputElement {
+export function checkbox(param: string, name: string): HTMLInputElement {
     const $input = <input class={styles.control} type="checkbox" onInput={function(event) {
         setParam(param, (event.target as HTMLInputElement).checked ? 'true' : '');
-        onChange();
     }} />;
-    function update() {
-        $input.checked = getParam(param) === 'true';
-    }
-    addEventListener('popstate', update);
-    update();
+    onChangeParams(() => $input.checked = getParam(param) === 'true');
     return <div class={styles.filter}>{name}:{$input}</div>;
 }
 
@@ -43,18 +31,12 @@ export function checkbox(param: string, name: string, onChange: () => void): HTM
  * Слайдер
  * @param param назавание параметра URL
  * @param name название фильтра
- * @param onChange функция обратного вызова при изменении
  */
-export function range(param: string, name: string, onChange: () => void): HTMLInputElement {
+export function range(param: string, name: string): HTMLInputElement {
     const $input = <input class={styles.control} type="range" onInput={function(event) {
         setParam(param, String((event.target as HTMLInputElement).value));
-        onChange();
     }} />;
-    function update() {
-        $input.value = +getParam(param) || 0;
-    }
-    addEventListener('popstate', update);
-    update();
+    onChangeParams(() => $input.value = +getParam(param) || 0);
     return <div class={styles.filter}>{name}:{$input}</div>;
 }
 
@@ -62,17 +44,11 @@ export function range(param: string, name: string, onChange: () => void): HTMLIn
  * @param param - назавание параметра URL
  * @param name - название фильтра
  * @param options - список пунктов для выбора
- * @param onChange - функция обратного вызова при изменении
  */
-export function select(param: string, name: string, options: [string, string][], onChange: () => void): HTMLSelectElement {
+export function select(param: string, name: string, options: [string, string][]): HTMLSelectElement {
     const $select = <select class={styles.control} onInput={function(event) {
         setParam(param, (event.target as HTMLSelectElement).value);
-        onChange();
     }}>{options.map(option => <option value={option[0]}>{option[1]}</option>)}</select>;
-    function update() {
-        $select.value = getParam(param) || '';
-    }
-    addEventListener('popstate', update);
-    update();
+    onChangeParams(() => $select.value = getParam(param) || '');
     return <div class={styles.filter}>{name}:{$select}</div>;
 }

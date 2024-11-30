@@ -1,4 +1,4 @@
-import { Product } from '../search.ts';
+import { Product } from '../../product.ts';
 import * as searchShops from '../shops/index.ts';
 
 /** Свойства для сортировки */
@@ -14,7 +14,7 @@ export async function post({ body }: { search: { [key: string]: string; }, body:
     const sorting = ['comments', 'priceDown', 'priceUp'].includes(body.sorting) ? sortingProps[body.sorting] : 'rating';
     const sortingOrder = body.sorting === 'priceDown' ? 1 : -1;
     return [200, {
-        results: products.flat().filter(function(product) {
+        products: products.flat().filter(function(product) {
             if ('minPrice' in body && product.price < +body.minPrice) return false;
             if ('maxPrice' in body && product.price > +body.maxPrice) return false;
             return true;

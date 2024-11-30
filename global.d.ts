@@ -13,6 +13,7 @@ declare namespace JSX {
             onKeyPress?: (event: KeyboardEvent) => void;
             onKeyUp?: (event: KeyboardEvent) => void;
             onKeyDown?: (event: KeyboardEvent) => void;
+            onMouseWheel?: (event: WheelEvent) => void;
             onFocus?: (event: FocusEvent) => void;
             onBlur?: (event: FocusEvent) => void;
             onLoad?: (event: Event) => void;

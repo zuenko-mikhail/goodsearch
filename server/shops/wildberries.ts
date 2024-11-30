@@ -1,4 +1,5 @@
-import { Product, search } from '../search.ts';
+import { Product, } from '../../product.ts';
+import { search } from '../search.ts';
 
 /** Возвращает ссылку на картинку товара */
 function getImgPath(id: number) {

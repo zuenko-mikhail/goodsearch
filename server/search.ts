@@ -1,18 +1,5 @@
 import Session from './http.ts';
-
-export interface Product {
-    shop: string;
-    id: number;
-    name: string;
-    supplier: string;
-    price: number;
-    oldPrice: number;
-    maxItems: number;
-    rating: number;
-    comments: number;
-    delivery: number;
-    images: string[];
-}
+import { Product } from '../product.ts';
 
 /**
  * Функция для упрощения запросов к магазинам для поиска товаров

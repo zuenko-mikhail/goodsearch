@@ -1,9 +1,10 @@
+import { Product } from '../product.ts';
 import { inputNumber, select } from './filters.tsx';
-import { renderProducts } from './product.tsx';
-import styles from './list-products.scss';
 import { postApi } from './lib/api.ts';
 import { $append, $clear, $remove } from './lib/dom.ts';
-import { getParam, getParams } from './urlParams.ts';
+import styles from './list-products.scss';
+import { renderProducts } from './product.tsx';
+import { getParam, getParams, onChangeParams } from './url-params.ts';
 
 /** Элемент фильтров */
 const $filters = (
@@ -12,34 +13,25 @@ const $filters = (
         ['comments', 'По отзывам'],
         ['priceUp', 'По цене ↑'],
         ['priceDown', 'По цене ↓']
-    ], loadProducts)}{inputNumber('minPrice', 'Мин. цена', loadProducts)}{inputNumber('maxPrice', 'Макс. цена', loadProducts)}{select('delivery', 'Доставка', [
+    ])}{inputNumber('minPrice', 'Мин. цена')}{inputNumber('maxPrice', 'Макс. цена')}{select('delivery', 'Доставка', [
         ['', 'В любое время'],
         ['0', 'Сегодня'],
         ['1', 'Завтра'],
         ['2', 'Послезавтра']
-    ], loadProducts)}</div>
+    ])}</div>
 );
 
 /** Элемент списка товаров */
 const $products: HTMLDivElement = <div class={styles.products} />;
 
-/** ID таймера. Таймер нужен, чтобы список товаров не обновлялся при вводе */
-let timerId: ReturnType<typeof setTimeout>;
-
-/** Функция обновления списка товаров */
-export function loadProducts() {
-    const query = getParam('query') || '';
+onChangeParams(async function() {
     $clear($products);
-    clearTimeout(timerId);
-    if (query === '') $remove($filters, $products);
-    else {
-        timerId = setTimeout(async function() {
-            const { results } = await postApi('search', getParams());
-            if (query !== getParam('query')) return;
-            $append($products, renderProducts(results));
-            $append(document.body, $filters, $products);
-        }, 500);
+    const query = getParam('query') || '';
+    if (query) {
+        const { products }: { products: Product[]; } = await postApi('search', getParams());
+        if (query !== (getParam('query') || '')) return;
+        $append($products, renderProducts(products));
+        $append(document.body, $filters, $products);
     }
-}
-addEventListener('popstate', loadProducts);
-loadProducts();
+    else $remove($filters, $products);
+});

@@ -1,0 +1,45 @@
+.title {
+    margin: 0;
+    text-align: center;
+}
+.queries {
+    padding-top: 350px;
+    padding-bottom: 20px;
+}
+
+.query {
+    margin: 20px 50px;
+    margin-bottom: 0;
+    border-radius: 15px;
+    box-shadow: 0 0 5px #000;
+    overflow: hidden;
+}
+.header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    height: 30px;
+    margin: 0;
+    padding: 5px;
+    box-shadow: 0 0 5px #000;
+    user-select: none;
+    cursor: pointer;
+}
+.delete {
+    width: 24px;
+    height: 24px;
+    background: #DDD;
+    border: 1px solid #AAA;
+    border-radius: 50%;
+    cursor: pointer;
+
+    &:hover {
+        background: #CCC;
+    }
+}
+.products {
+    display: flex;
+    gap: 15px;
+    padding: 20px;
+    overflow-x: auto;
+}

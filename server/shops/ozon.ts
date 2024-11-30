@@ -1,4 +1,5 @@
-import { Product, search } from '../search.ts';
+import { Product } from '../../product.ts';
+import { search } from '../search.ts';
 
 /** Парсит дату */
 function parseDate(input: string) {
