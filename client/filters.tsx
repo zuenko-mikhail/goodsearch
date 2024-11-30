@@ -17,7 +17,7 @@ export function inputNumber(param: string, name: string, onChange: () => void): 
     }
     addEventListener('popstate', update);
     update();
-    return <div class={styles.filter}>{name}:{$input}</div>;
+    return <div class={styles.filter}><span class={styles.filtername}>{name}</span>:{$input}</div>;
 }
 
 /**
@@ -36,7 +36,7 @@ export function checkbox(param: string, name: string, onChange: () => void): HTM
     }
     addEventListener('popstate', update);
     update();
-    return <div class={styles.filter}>{name}:{$input}</div>;
+    return <div class={styles.filter}><span class={styles.filtername}>{name}</span>:{$input}</div>;
 }
 
 /**
@@ -55,7 +55,7 @@ export function range(param: string, name: string, onChange: () => void): HTMLIn
     }
     addEventListener('popstate', update);
     update();
-    return <div class={styles.filter}>{name}:{$input}</div>;
+    return <div class={styles.filter}><span class={styles.filtername}>{name}</span>:{$input}</div>;
 }
 
 /** Выбор из списка
@@ -74,5 +74,5 @@ export function select(param: string, name: string, options: [string, string][],
     }
     addEventListener('popstate', update);
     update();
-    return <div class={styles.filter}>{name}:{$select}</div>;
+    return <div class={styles.filter}><span class={styles.filtername}>{name}</span>:{$select}</div>;
 }

@@ -12,3 +12,7 @@ export function declension(num: number, words: string[]) {
 export function sepThous(num: number): string {
     return num.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ' ');
 }
+
+// export function discount(num: number): string {
+//     return
+// } 
