@@ -20,8 +20,11 @@ const $filters = (
     ], loadProducts)}</div>
 );
 
+const $loading: HTMLDivElement = <div class={styles.loading}></div>;
+
 /** Элемент списка товаров */
 const $products: HTMLDivElement = <div class={styles.products} />;
+
 
 /** ID таймера. Таймер нужен, чтобы список товаров не обновлялся при вводе */
 let timerId: ReturnType<typeof setTimeout>;
@@ -29,12 +32,15 @@ let timerId: ReturnType<typeof setTimeout>;
 /** Функция обновления списка товаров */
 export function loadProducts() {
     const query = getParam('query') || '';
+    var loading = false;
     $clear($products);
     clearTimeout(timerId);
     if (query === '') $remove($filters, $products);
     else {
         timerId = setTimeout(async function() {
+            $append(document.body,$loading);
             const { results } = await postApi('search', getParams());
+            $remove($loading);
             if (query !== getParam('query')) return;
             $append($products, renderProducts(results));
             $append(document.body, $filters, $products);

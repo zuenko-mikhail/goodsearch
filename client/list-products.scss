@@ -19,3 +19,28 @@
     gap: 15px;
     margin: 70px 30px 30px 290px;
 }
+
+.loading {
+    position: absolute;
+    width: 100px;
+    height: 100px;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    top: 0;
+    margin: auto;
+    background: url(./images/loading.svg); /* Подключение SVG */
+    background-repeat: no-repeat;
+    background-size: contain;
+
+}
+
+
+@keyframes spin {
+    from {
+        transform: rotate(0deg);
+    }
+    to {
+        transform: rotate(360deg);
+    }
+}
