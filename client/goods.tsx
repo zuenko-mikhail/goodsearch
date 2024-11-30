@@ -3,6 +3,7 @@ import styles from './goods.scss';
 import { postApi } from './lib/api.ts';
 import { $append, $clear, $remove } from './lib/dom.ts';
 import { getParam, getParams } from './urlParams.ts';
+import { declension, sepThous } from './utils.tsx';
 
 /** Элемент фильтров */
 const $filters = (
@@ -50,7 +51,7 @@ export function loadGoods() {
             const { results } = await postApi('search', getParams());
             if (query !== getParam('query')) return;
             for (const result of results) {
-                $append($goods, <a class={styles.good} href={getLink(result.shop, result.id)} target="_blank"><div class={styles.imgContainer}><img class={styles.img} src={result.images.length ? result.images[0] : ''} /></div><div><h3 class={styles.name}>{result.name}</h3><div class={styles.info}>{(result.rating || 0).toFixed(1)} • {result.comments || '0'} отзывов {result.supplier ? ` • ${result.supplier}` : ''}</div><div class={styles.price}>{result.price}₽</div></div></a>);
+                $append($goods, <a class={styles.good} href={getLink(result.shop, result.id)} target="_blank"><div class={styles.imgContainer}><img class={styles.img} src={result.images.length ? result.images[0] : ''} /></div><div><h3 class={styles.name}>{result.name}</h3><div class={styles.info}>{(result.rating || 0).toFixed(1)} • {result.comments || '0'} отзыв{declension(result.comments || 0, ['', 'а', 'ов'])} {result.supplier ? ` • ${result.supplier}` : ''}</div><div class={styles.price}>{sepThous(result.price)}₽{result.oldPrice ? <s class={styles.oldPrice}>{sepThous(result.oldPrice)}₽</s> : ''}</div></div></a>);
             }
             $append(document.body, $filters, $goods);
         }, 500);

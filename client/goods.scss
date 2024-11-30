@@ -74,6 +74,13 @@
     }
 }
 .price {
+    display: flex;
+    align-items: center;
+    gap: 5px;
     font-size: 20px;
     margin-top: 5px;
+}
+.old-price {
+    color: #888;
+    font-size: 16px;
 }
