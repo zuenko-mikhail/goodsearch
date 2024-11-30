@@ -14,20 +14,20 @@
 }
 
 .goods {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 15px;
     margin: 70px 30px 30px 290px;
 }
 
 .good {
-    display: flex;
-    gap: 10px;
-    height: 150px;
-    margin-top: 20px;
+    width: 200px;
+    height: 300px;
     padding: 10px;
     border-radius: 15px;
     color: black;
     box-shadow: 0 0 5px #777;
     text-decoration: none;
-    white-space: nowrap;
     transition: box-shadow 0.2s;
 
     &:hover {
@@ -39,15 +39,11 @@
     align-items: center;
     justify-content: center;
     flex: 0 0 auto;
-    width: 130px;
-    height: 130px;
+    width: 180px;
+    height: 180px;
     background: #EFEFEF;
     box-shadow: 0 0 3px #777;
     border-radius: 10px;
-    overflow: hidden;
-}
-.info {
-    flex: 1;
     overflow: hidden;
 }
 .img {
@@ -55,12 +51,29 @@
     max-height: 100%;
 }
 .name {
-    margin: 10px 0;
-    font-size: 20px;
+    display: block;
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 2;
+    margin: 5px 0;
+    font-size: 16px;
     overflow: hidden;
     text-overflow: ellipsis;
 }
+.info {
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+
+    &::before {
+        content: '';
+        display: inline-block;
+        width: 16px;
+        height: 16px;
+        background: url('./images/star-yellow.svg');
+    }
+}
 .price {
     font-size: 20px;
-    margin: 20px;
+    margin-top: 5px;
 }

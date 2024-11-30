@@ -62,6 +62,12 @@ body {
         outline: none;
     }
 }
+.favorite-star {
+    width: 24px;
+    height: 24px;
+    background: url('./images/star.svg');
+    border: none;
+}
 
 .info {
     display: flex;
