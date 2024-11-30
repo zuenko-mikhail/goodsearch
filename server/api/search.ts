@@ -1,4 +1,5 @@
 import { Product } from '../../product.ts';
+import { Filters } from '../search.ts';
 import * as searchShops from '../shops/index.ts';
 
 /** Рассчитывает скидку */
@@ -17,13 +18,19 @@ const sortingFuncs = {
 
 export async function post({ body }: { search: { [key: string]: string; }, body: { [key: string]: string; }; }) {
     if (!('query' in body) || body.query === '' || 'minPrice' in body && isNaN(+body.minPrice) || 'maxPrice' in body && isNaN(+body.maxPrice)) return [200, []];
-    const products: Product[][] = await Promise.all(Object.values(searchShops as { [key: string]: Function; }).map(searchShop => searchShop(body.query).catch(() => [])));
-    const sorting = body.sorting in sortingFuncs ? sortingFuncs[body.sorting] : sortingFuncs.rating;
+
+    const sorting = body.sorting in sortingFuncs ? body.sorting : 'rating';
+    const filters: Filters = { sorting };
+    if ('minPrice' in body) filters.minPrice = +body.minPrice;
+    if ('maxPrice' in body) filters.maxPrice = +body.maxPrice;
+    if ('delivery' in body) filters.delivery = +body.delivery;
+
+    const products: Product[][] = await Promise.all(Object.values(searchShops as { [key: string]: Function; }).map(searchShop => searchShop(body.query, filters).catch((e) => (console.log(e), []))));
     return [200, {
         products: products.flat().filter(function(product) {
             if ('minPrice' in body && product.price < +body.minPrice) return false;
             if ('maxPrice' in body && product.price > +body.maxPrice) return false;
             return true;
-        }).sort(sorting)
+        }).sort(sortingFuncs[sorting])
     }];
 }

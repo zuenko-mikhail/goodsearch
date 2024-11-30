@@ -1,6 +1,6 @@
 .product {
     width: 200px;
-    height: 300px;
+    height: 325px;
     padding: 10px;
     border-radius: 15px;
     color: black;
@@ -37,6 +37,7 @@
     overflow: hidden;
     text-overflow: ellipsis;
 }
+
 .info {
     white-space: nowrap;
     overflow: hidden;
@@ -54,10 +55,35 @@
     display: flex;
     align-items: center;
     gap: 5px;
-    font-size: 20px;
     margin-top: 5px;
+    font-size: 20px;
+    white-space: nowrap;
 }
 .old-price {
     color: #888;
     font-size: 16px;
+}
+
+.badges {
+    display: flex;
+    gap: 5px;
+    margin-top: 5px;
+    white-space: nowrap;
+    font-size: 12px;
+}
+.badge {
+    padding: 3px 5px;
+    border-radius: 10px;
+    color: white;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+.discount {
+    composes: badge;
+    flex-shrink: 0;
+    background: #F33;
+}
+.supplier {
+    composes: badge;
+    background: #33F;
 }

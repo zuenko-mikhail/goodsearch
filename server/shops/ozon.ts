@@ -27,9 +27,22 @@ function parseDate(input: string) {
     }
 }
 
+/** Список названий сортировок API */
+const sorting = {
+    rating: 'rating',
+    comments: 'score',
+    priceDown: 'price',
+    priceUp: 'price_desc',
+    discount: 'discount'
+};
+
 export default search(
     'www.ozon.ru',
-    (query, page) => '/api/entrypoint-api.bx/page/json/v2?url=' + encodeURIComponent(`/search/?deny_category_prediction=true&from_global=true&layout_container=categorySearchMegapagination&layout_page_index=${page}&page=${page}&text=${query}`),
+    function(query, filters, page) {
+        const price = filters.minPrice || filters.maxPrice ? `&currency_price=${encodeURIComponent(`${(filters.minPrice || 0).toFixed(3)};${(filters.maxPrice || Number.MAX_SAFE_INTEGER).toFixed(3)}`)}` : '';
+        const delivery = filters.delivery ? `&delivery=${filters.delivery}` : '';
+        return '/api/entrypoint-api.bx/page/json/v2?url=' + encodeURIComponent(`/search/?deny_category_prediction=true${price}${delivery}&from_global=true&layout_container=categorySearchMegapagination&layout_page_index=${page}&page=${page}&sorting=${sorting[filters.sorting]}&text=${query}`);
+    },
     function(response): Product[] {
         if (!response.widgetStates) return [];
         const products = JSON.parse(Object.entries(response.widgetStates as { [key: string]: string; }).find(([key]) => key.startsWith('searchResultsV2'))?.[1])?.items || [];
