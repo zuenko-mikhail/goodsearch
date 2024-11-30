@@ -1,0 +1,21 @@
+.filters {
+    position: fixed;
+    top: 70px;
+    left: 20px;
+    width: 250px;
+    padding: 20px;
+    border: 1px solid #005bff;
+    border-radius: 15px;
+}
+.title {
+    margin: 0;
+    margin-bottom: 10px;
+    text-align: center;
+}
+
+.products {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 15px;
+    margin: 70px 30px 30px 290px;
+}

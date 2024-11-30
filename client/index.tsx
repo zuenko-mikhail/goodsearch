@@ -1,4 +1,4 @@
-import { loadGoods } from './goods.tsx';
+import { loadProducts } from './list-products.tsx';
 import styles from './index.scss';
 import { $addClasses, $append, $removeClasses } from './lib/dom.ts';
 import { deleteParam, getParam, setParam } from './urlParams.ts';
@@ -8,7 +8,7 @@ const $search: HTMLInputElement = <input class={styles.search} type="search" pla
     if ($search.value === '') deleteParam('query');
     else setParam('query', $search.value);
     updateSearch();
-    loadGoods();
+    loadProducts();
 }} />;
 
 /** Обновляет состояние поиска и запускает анимацию */
@@ -19,7 +19,7 @@ function updateSearch() {
 }
 
 /** Звёздочка для добавления запроса в избранное */
-const $favoriteStar: HTMLButtonElement = <button class={styles.favoriteStar} />;
+const $favoriteStar: HTMLButtonElement = <button class={styles.favoriteStar} title="Добавить запрос в избранное" />;
 $favoriteStar.addEventListener('click', function() {
     alert('Нажато!');
 });
