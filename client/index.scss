@@ -21,6 +21,7 @@ body {
     display: flex;
     justify-content: center;
     align-items: center;
+    gap: 10px;
     position: absolute;
     top: 100px;
     width: 100%;
@@ -31,6 +32,13 @@ body {
     &.searching {
         top: 0;
         background: #5588FF;
+
+        &::before {
+            content: '';
+            width: 40px;
+            height: 40px;
+            background: url('./images/logo-small.svg') center / 100% no-repeat;
+        }
 
         .logo, .shops-container {
             display: none;
@@ -43,9 +51,25 @@ body {
 
 .logo {
     position: absolute;
-    top: -100px;
+    top: -80px;
+    white-space: nowrap;
+
+    &::before {
+        content: '';
+        display: inline-block;
+        width: 100px;
+        height: 100px;
+        margin-right: 20px;
+        background: url('./images/logo.svg') center / 100% no-repeat;
+        vertical-align: top;
+    }
+}
+.logo-title {
+    margin-left: 100px;
+    margin-right: 200px;
     color: #005BFF;
     font-size: 50px;
+    text-align: center;
 }
 
 .search {
@@ -69,7 +93,6 @@ body {
     display: none;
     width: 32px;
     height: 32px;
-    margin-left: 5px;
     background: url('./images/star-unfilled.svg') center / 75% no-repeat;
     border: none;
     border-radius: 50%;

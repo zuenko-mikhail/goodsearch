@@ -20,10 +20,10 @@
     align-items: center;
     justify-content: space-between;
     position: relative;
-    height: 30px;
+    height: 50px;
     margin: 0;
-    padding: 5px;
-    padding-left: 30px;
+    padding: 10px;
+    padding-left: 35px;
     border-bottom: 1px solid #005bff;
     border-top-left-radius: 13px;
     border-top-right-radius: 13px;
@@ -33,7 +33,7 @@
     &::before {
         content: '';
         position: absolute;
-        left: 5px;
+        left: 10px;
         width: 20px;
         height: 20px;
         background: url('./images/star-black.svg') center / 100%;
@@ -43,8 +43,8 @@
     }
 }
 .delete {
-    width: 24px;
-    height: 24px;
+    width: 32px;
+    height: 32px;
     background: #EEE url('./images/cross.svg') center / 50% no-repeat;
     border: 1px solid #AAA;
     border-radius: 50%;
