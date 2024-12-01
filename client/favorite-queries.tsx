@@ -15,11 +15,11 @@ const $favQueries: HTMLDivElement = <div class={styles.queries} />;
 interface FavoriteQuery {
     query: string;
     sorting?: string;
-    minPrice?: number;
-    maxPrice?: number;
-    delivery?: number;
+    minPrice?: string;
+    maxPrice?: string;
+    delivery?: string;
 }
-const favParams = ['query', 'sorting', 'minPrice', 'maxPrice', 'delivery'];
+const favParams = ['query', 'minPrice', 'maxPrice', 'delivery'];
 
 /** Получает список избранных запросов из localStorage */
 function getFavoriteQueries(): FavoriteQuery[] {
@@ -40,9 +40,9 @@ export function addFavoriteQuery() {
 
     const params = getParams();
     const query: FavoriteQuery = { query: params.query };
-    if (params.minPrice) query.minPrice = +params.minPrice;
-    if (params.maxPrice) query.maxPrice = +params.maxPrice;
-    if (params.delivery) query.delivery = +params.delivery;
+    if (params.minPrice) query.minPrice = params.minPrice;
+    if (params.maxPrice) query.maxPrice = params.maxPrice;
+    if (params.delivery) query.delivery = params.delivery;
 
     const queries = getFavoriteQueries();
     queries.push(query);
