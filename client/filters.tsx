@@ -55,7 +55,7 @@ export function range(param: string, name: string): HTMLInputElement {
  */
 export function select(param: string, name: string, options: [string, string][]): HTMLSelectElement {
     const $select = <select class={styles.control} onInput={function(event) {
-        setUpdateTimer(param, (event.target as HTMLSelectElement).value);
+        setParam(param, (event.target as HTMLSelectElement).value);
     }}>{options.map(option => <option value={option[0]}>{option[1]}</option>)}</select>;
     onChangeParams(() => $select.value = getParam(param) || '');
     return <div class={styles.filter}>{name}:{$select}</div>;

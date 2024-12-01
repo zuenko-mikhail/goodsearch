@@ -50,7 +50,7 @@ export async function post({ body }: { search: { [key: string]: string; }, body:
         products: products.flat().filter(function(product) {
             const queryWords = body.query.match(/[a-zA-Zа-яА-ЯёЁ0-9%]+/g) || [];
             const productWords = (product.name || '').match(/[a-zA-Zа-яА-ЯёЁ0-9%]+/g) || [];
-            if (productWords.every(pw => queryWords.every(qw => compareTwoStrings(pw, qw) < 0.5))) return false;
+            if (queryWords.some(qw => productWords.every(pw => compareTwoStrings(qw, pw) < 0.5))) return false;
 
             if ('minPrice' in body && product.price < +body.minPrice) return false;
             if ('maxPrice' in body && product.price > +body.maxPrice) return false;
