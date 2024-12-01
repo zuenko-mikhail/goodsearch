@@ -28,6 +28,7 @@ const $products: HTMLDivElement = <div class={styles.products} />;
 
 onChangeParams(async function() {
     $clear($products);
+    $remove($filters);
     const params1 = getParams();
     if (params1.query) {
         $append(document.body, $products);
@@ -48,5 +49,5 @@ onChangeParams(async function() {
         $append($products, renderProducts(products));
         $insertBefore($products, $filters);
     }
-    else $remove($filters, $products);
+    else $remove($products);
 });
