@@ -1,7 +1,7 @@
 import { Product } from '../product.js';
 import styles from './favorite-queries.scss';
 import { postApi } from './lib/api.ts';
-import { $append, $clear, $remove } from './lib/dom.ts';
+import { $append, $clear, $insertBefore, $remove } from './lib/dom.ts';
 import { $loading } from './loading.tsx';
 import { renderProducts } from './product.tsx';
 import { getParam, getParams, onChangeParams, setParams } from './url-params.ts';
@@ -78,7 +78,6 @@ onChangeParams(async function() {
 
         for (const favQuery of queries) {
             const { products }: { products: Product[]; } = await postApi('search', { sorting: 'discount', ...favQuery });
-            $remove($loading);
 
             const $favQuery = <div class={styles.query}><h3 class={styles.header} onClick={
                 () => setParams(Object.fromEntries(Object.entries(favQuery).map(([key, value]) => [key, String(value)])))
@@ -90,7 +89,8 @@ onChangeParams(async function() {
                 if (queries.length === 0) $remove($favQueries);
             }} /></h3><div class={styles.products} onMouseWheel={onMouseWheel}>{renderProducts(products)}</div></div>;
 
-            $append($favQueries, $favQuery);
+            $insertBefore($loading, $favQuery);
         }
+        $remove($loading);
     }
 });
