@@ -1,4 +1,5 @@
 .product {
+    position: relative;
     width: 200px;
     height: 325px;
     padding: 10px;
@@ -11,6 +12,28 @@
         box-shadow: 0 0 7px #333;
     }
 }
+
+.shop {
+    position: absolute;
+    top: 5px;
+    left: 5px;
+    width: 32px;
+    height: 32px;
+    background: center / 100% no-repeat;
+}
+.joom {
+    composes: shop;
+    background-image: url('./images/joom.svg');
+}
+.ozon {
+    composes: shop;
+    background-image: url('./images/ozon.svg');
+}
+.wildberries {
+    composes: shop;
+    background-image: url('./images/wildberries.svg');
+}
+
 .img-container {
     display: flex;
     align-items: center;

@@ -31,8 +31,8 @@ function parseDate(input: string) {
 const sorting = {
     rating: 'rating',
     comments: 'score',
-    priceDown: 'price',
-    priceUp: 'price_desc',
+    priceDown: 'price_desc',
+    priceUp: 'price',
     discount: 'discount'
 };
 

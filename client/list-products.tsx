@@ -28,14 +28,22 @@ const $products: HTMLDivElement = <div class={styles.products} />;
 
 onChangeParams(async function() {
     $clear($products);
-    const query = getParam('query') || '';
-    if (query) {
+    const params1 = getParams();
+    if (params1.query) {
         $append(document.body, $products);
         $append($products, $loading);
 
-        const { products }: { products: Product[]; } = await postApi('search', getParams());
+        const { products }: { products: Product[]; } = await postApi('search', params1);
         $remove($loading);
-        if (query !== (getParam('query') || '')) return;
+
+        const params2 = getParams();
+        if ([
+            'query',
+            'sorting',
+            'minPrice',
+            'maxPrice',
+            'delivery'
+        ].some(name => params1[name] && params2[name] && params1[name] !== params2[name])) return;
 
         $append($products, renderProducts(products));
         $insertBefore($products, $filters);

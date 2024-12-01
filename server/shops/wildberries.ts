@@ -13,8 +13,8 @@ function getImgPath(id: number) {
 const sorting = {
     rating: 'rate',
     comments: 'popular',
-    priceDown: 'priceup',
-    priceUp: 'pricedown',
+    priceDown: 'pricedown',
+    priceUp: 'priceup',
     discount: 'benefit'
 };
 

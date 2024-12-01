@@ -32,8 +32,8 @@ const sortingFuncs = {
     rating: (p1: Product, p2: Product) => p2.rating - p1.rating,
     comments: (p1: Product, p2: Product) => p2.comments - p1.comments,
     discount: (p1: Product, p2: Product) => getDiscount(p2.price, p2.oldPrice) - getDiscount(p1.price, p1.oldPrice),
-    priceDown: (p1: Product, p2: Product) => p1.price - p2.price,
-    priceUp: (p1: Product, p2: Product) => p2.price - p1.price
+    priceDown: (p1: Product, p2: Product) => p2.price - p1.price,
+    priceUp: (p1: Product, p2: Product) => p1.price - p2.price
 };
 
 export async function post({ body }: { search: { [key: string]: string; }, body: { [key: string]: string; }; }) {
@@ -45,7 +45,7 @@ export async function post({ body }: { search: { [key: string]: string; }, body:
     if ('maxPrice' in body) filters.maxPrice = +body.maxPrice;
     if ('delivery' in body) filters.delivery = +body.delivery;
 
-    const products: Product[][] = await Promise.all(Object.values(searchShops as { [key: string]: Function; }).map(searchShop => searchShop(body.query, filters, 2).catch(() => [])));
+    const products: Product[][] = await Promise.all(Object.values(searchShops as { [key: string]: Function; }).map(searchShop => searchShop(body.query, filters, 3).catch(() => [])));
     return [200, {
         products: products.flat().filter(function(product) {
             const queryWords = body.query.match(/[a-zA-Zа-яА-ЯёЁ0-9%]+/g) || [];
@@ -54,6 +54,7 @@ export async function post({ body }: { search: { [key: string]: string; }, body:
 
             if ('minPrice' in body && product.price < +body.minPrice) return false;
             if ('maxPrice' in body && product.price > +body.maxPrice) return false;
+            if ('delivery' in body && (!product.delivery || product.delivery > Date.now() + +body.delivery * 24 * 60 * 60 * 1000)) return false;
 
             return true;
         }).sort(sortingFuncs[sorting])

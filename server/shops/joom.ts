@@ -16,10 +16,10 @@ export default async function(query: string, filters: Filters, pages = 1) {
             sorting.push({ fieldName: 'rating', order: 'desc' });
             break;
         case 'priceUp':
-            sorting.push({ fieldName: 'origPrice', order: 'desc' });
+            sorting.push({ fieldName: 'origPrice', order: 'asc' });
             break;
         case 'priceDown':
-            sorting.push({ fieldName: 'origPrice', order: 'asc' });
+            sorting.push({ fieldName: 'origPrice', order: 'desc' });
             break;
     }
 
