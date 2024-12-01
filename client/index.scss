@@ -28,8 +28,10 @@ body {
     height: 50px;
     padding: 0 20px;
     transition: top 250ms ease-in-out, background 250ms ease-in-out;
+    z-index: 1;
 
     &.searching {
+        position: fixed;
         top: 0;
         background: #5588FF;
 
